@@ -1,13 +1,17 @@
-#
-# Developer tips:
-#   - Below code should be replaced with the code for the root level module
-#
+##############################################################################
+# Secrets Manager Custom Credentials Engine Module
+##############################################################################
 
-resource "ibm_resource_instance" "cos_instance" {
-  name              = var.name
-  resource_group_id = var.resource_group_id
-  service           = "cloud-object-storage"
-  plan              = var.plan
-  location          = "global"
-  tags              = var.resource_tags
+resource "ibm_sm_custom_credentials_configuration" "custom_credentials_configuration_instance" {
+  instance_id   = var.secrets_manager_guid
+  region        = var.sm_region
+  name          = var.custom_credential_engine_name
+  endpoint_type = var.endpoint_type
+  api_key_ref   = var.iam_credentials_secret_id
+  code_engine {
+    project_id = var.code_engine_project_id
+    job_name   = var.code_engine_job_name
+    region     = var.code_engine_region
+  }
+  task_timeout = var.task_timeout
 }
