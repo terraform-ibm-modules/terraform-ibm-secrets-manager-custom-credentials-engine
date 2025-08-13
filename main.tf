@@ -3,7 +3,7 @@
 ##############################################################################
 
 resource "ibm_sm_custom_credentials_configuration" "custom_credentials_configuration_instance" {
-  instance_id   = var.secrets_manager_guid
+  instance_id   = var.sm_guid
   region        = var.sm_region
   name          = var.custom_credential_engine_name
   endpoint_type = var.endpoint_type

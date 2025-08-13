@@ -2,7 +2,7 @@
 # Input Variables
 ########################################################################################################################
 
-variable "secrets_manager_guid" {
+variable "sm_guid" {
   type        = string
   description = "GUID of secrets manager instance to create the secret engine in."
 }
@@ -50,4 +50,9 @@ variable "code_engine_region" {
 variable "task_timeout" {
   type        = string
   description = "The maximum allowed time for a code engine job to be completed."
+
+  validation {
+    condition     = can(regex("^\\d+[smh]$", var.task_timeout))
+    error_message = "task_timeout must be a string with a number followed by 's', 'm', or 'h' (e.g., '30s', '3m', '1h')."
+  }
 }

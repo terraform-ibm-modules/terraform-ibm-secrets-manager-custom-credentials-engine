@@ -144,7 +144,7 @@ No modules.
 | <a name="input_custom_credential_engine_name"></a> [custom\_credential\_engine\_name](#input\_custom\_credential\_engine\_name) | The name of the custom credentials engine to be created. | `string` | n/a | yes |
 | <a name="input_endpoint_type"></a> [endpoint\_type](#input\_endpoint\_type) | The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private`. | `string` | `"public"` | no |
 | <a name="input_iam_credentials_secret_id"></a> [iam\_credentials\_secret\_id](#input\_iam\_credentials\_secret\_id) | The IAM credentials secret ID that is used for setting up a custom credentials secret configuration. | `string` | n/a | yes |
-| <a name="input_secrets_manager_guid"></a> [secrets\_manager\_guid](#input\_secrets\_manager\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
+| <a name="input_sm_guid"></a> [sm\_guid](#input\_sm\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
 | <a name="input_sm_region"></a> [sm\_region](#input\_sm\_region) | The region of the secrets manager instance. | `string` | n/a | yes |
 | <a name="input_task_timeout"></a> [task\_timeout](#input\_task\_timeout) | The maximum allowed time for a code engine job to be completed. | `string` | n/a | yes |
 
