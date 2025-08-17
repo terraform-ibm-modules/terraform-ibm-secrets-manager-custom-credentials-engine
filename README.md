@@ -123,16 +123,23 @@ statement instead the previous block.
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.2, < 2.0.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
 
 ### Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_sm_iam_credential_secret"></a> [sm\_iam\_credential\_secret](#module\_sm\_iam\_credential\_secret) | terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm | 1.2.0 |
 
 ### Resources
 
 | Name | Type |
 |------|------|
+| [ibm_iam_authorization_policy.sm_ce_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
+| [ibm_iam_service_id.sm_service_id](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_id) | resource |
+| [ibm_iam_service_policy.sm_service_id_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy) | resource |
 | [ibm_sm_custom_credentials_configuration.custom_credentials_configuration_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/sm_custom_credentials_configuration) | resource |
+| [time_sleep.wait_for_service_id](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ### Inputs
 
@@ -143,10 +150,16 @@ No modules.
 | <a name="input_code_engine_region"></a> [code\_engine\_region](#input\_code\_engine\_region) | The region of the code engine project. | `string` | n/a | yes |
 | <a name="input_custom_credential_engine_name"></a> [custom\_credential\_engine\_name](#input\_custom\_credential\_engine\_name) | The name of the custom credentials engine to be created. | `string` | n/a | yes |
 | <a name="input_endpoint_type"></a> [endpoint\_type](#input\_endpoint\_type) | The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private`. | `string` | `"public"` | no |
-| <a name="input_iam_credentials_secret_id"></a> [iam\_credentials\_secret\_id](#input\_iam\_credentials\_secret\_id) | The IAM credentials secret ID that is used for setting up a custom credentials secret configuration. | `string` | n/a | yes |
+| <a name="input_iam_credential_secret_auto_rotation_interval"></a> [iam\_credential\_secret\_auto\_rotation\_interval](#input\_iam\_credential\_secret\_auto\_rotation\_interval) | Specifies the rotation interval for the rotation policy. | `string` | `60` | no |
+| <a name="input_iam_credential_secret_auto_rotation_unit"></a> [iam\_credential\_secret\_auto\_rotation\_unit](#input\_iam\_credential\_secret\_auto\_rotation\_unit) | Specifies the unit of time for rotation policy. Acceptable values are `day` or `month`. | `string` | `"day"` | no |
+| <a name="input_iam_credential_secret_group_id"></a> [iam\_credential\_secret\_group\_id](#input\_iam\_credential\_secret\_group\_id) | Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in default secret-group. | `string` | `null` | no |
+| <a name="input_iam_credential_secret_labels"></a> [iam\_credential\_secret\_labels](#input\_iam\_credential\_secret\_labels) | Optional list of up to 30 labels to be created on the secret. Labels can be used to search for secrets in the Secrets Manager instance. | `list(string)` | `[]` | no |
+| <a name="input_iam_credential_secret_name"></a> [iam\_credential\_secret\_name](#input\_iam\_credential\_secret\_name) | The name of the IAM credential secret to allow code engine job to pull secrets from SM. | `string` | n/a | yes |
+| <a name="input_iam_credential_secret_ttl"></a> [iam\_credential\_secret\_ttl](#input\_iam\_credential\_secret\_ttl) | Specify validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively). | `string` | `"7776000"` | no |
+| <a name="input_service_id_name"></a> [service\_id\_name](#input\_service\_id\_name) | The name of the service ID to be created to allow code engine job to pull secrets from SM. | `string` | n/a | yes |
 | <a name="input_sm_guid"></a> [sm\_guid](#input\_sm\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
 | <a name="input_sm_region"></a> [sm\_region](#input\_sm\_region) | The region of the secrets manager instance. | `string` | n/a | yes |
-| <a name="input_task_timeout"></a> [task\_timeout](#input\_task\_timeout) | The maximum allowed time for a code engine job to be completed. | `string` | n/a | yes |
+| <a name="input_task_timeout"></a> [task\_timeout](#input\_task\_timeout) | The maximum allowed time for a code engine job to be completed. | `string` | `"5m"` | no |
 
 ### Outputs
 
