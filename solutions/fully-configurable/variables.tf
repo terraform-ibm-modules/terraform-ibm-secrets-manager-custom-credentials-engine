@@ -85,6 +85,7 @@ variable "code_engine_region" {
 variable "task_timeout" {
   type        = string
   description = "The maximum allowed time for a code engine job to be completed."
+  default     = "5m"
 
   validation {
     condition     = can(regex("^\\d+[smh]$", var.task_timeout))
