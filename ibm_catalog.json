@@ -80,6 +80,7 @@
                 },
                 {
               "key": "secrets_manager_region",
+              "type": "string",
               "required": true,
               "virtual": true,
               "default_value": "us-south",
