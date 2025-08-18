@@ -67,17 +67,17 @@ variable "endpoint_type" {
   }
 }
 
-variable "code_engine_project_id" {
+variable "existing_code_engine_project_id" {
   type        = string
-  description = "The Project ID of the code engine project used by the custom credentials configuration."
+  description = "The Project ID of the code engine project used by the custom credentials configuration. [Learn more](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project)"
 }
 
-variable "code_engine_job_name" {
+variable "existing_code_engine_job_name" {
   type        = string
-  description = "The code engine job name used by this custom credentials configuration."
+  description = "The code engine job name used by this custom credentials configuration. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-engine-custom-ce-job&interface=ui)"
 }
 
-variable "code_engine_region" {
+variable "existing_code_engine_region" {
   type        = string
   description = "The region of the code engine project."
 }

@@ -21,7 +21,7 @@
             "solution"
         ],
         "short_description": "Creates and configures a Secrets Manager custom credentials engine.",
-        "long_description": "This deployable architecture is used to provision and configure a custom credentials engine that will be used to store [custom credential secrets](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-custom-credentials&interface=ui) for external systems in IBM Secrets Manager service. It creates an IAM Credentials secret, a service ID and service policy that will allow the job running in code engin to access secrets manager to update the custom secret. The architecture also creates an IAM service authorization between secrets manager and code engine project. In order to use this deployable architecture make sure a secrets manager instance is created with IAM credentials engine configured or if [Cloud automation for Secrets Manager](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager) is being used then [skip_iam_authorization_policy](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager/blob/main/variables.tf#L58) is set to true.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
+        "long_description": "This deployable architecture is used to provision and configure a custom credentials engine that will be used to store [custom credential secrets](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-custom-credentials&interface=ui) for external systems in IBM Secrets Manager service. It creates an IAM Credentials secret, a service ID and service policy that will allow the job running in code engine to access secrets manager to update the custom secret. The architecture also creates an IAM service authorization between secrets manager and code engine project. In order to use this deployable architecture make sure a secrets manager instance is created with IAM credentials engine configured or use [Cloud automation for Secrets Manager](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager) and a code engine Job is present with the required image.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
         "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/blob/main/README.md",
         "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/refs/heads/13662-custom-engine/images/secrets_manager_custom_credentials_engine.svg",
         "provider_name": "IBM",
@@ -79,54 +79,54 @@
                     "hidden": true
                 },
                 {
-              "key": "secrets_manager_region",
-              "type": "string",
-              "required": true,
-              "virtual": true,
-              "default_value": "us-south",
-              "description": "The region to provision a new Secrets Manager instance in.",
-              "options": [
-                {
-                  "displayname": "Osaka (jp-osa)",
-                  "value": "jp-osa"
-                },
-                {
-                  "displayname": "Sydney (au-syd)",
-                  "value": "au-syd"
-                },
-                {
-                  "displayname": "Tokyo (jp-tok)",
-                  "value": "jp-tok"
-                },
-                {
-                  "displayname": "Frankfurt (eu-de)",
-                  "value": "eu-de"
-                },
-                {
-                  "displayname": "London (eu-gb)",
-                  "value": "eu-gb"
-                },
-                {
-                  "displayname": "Madrid (eu-es)",
-                  "value": "eu-es"
-                },
-                {
-                  "displayname": "Dallas (us-south)",
-                  "value": "us-south"
-                },
-                {
-                  "displayname": "Toronto (ca-tor)",
-                  "value": "ca-tor"
-                },
-                {
-                  "displayname": "Washington DC (us-east)",
-                  "value": "us-east"
-                },
-                {
-                  "displayname": "Sao Paulo (br-sao)",
-                  "value": "br-sao"
-                }
-              ]
+                    "key": "secrets_manager_region",
+                    "type": "string",
+                    "required": true,
+                    "virtual": true,
+                    "default_value": "us-south",
+                    "description": "The region to provision a new Secrets Manager instance in.",
+                    "options": [
+                    {
+                        "displayname": "Osaka (jp-osa)",
+                        "value": "jp-osa"
+                    },
+                    {
+                        "displayname": "Sydney (au-syd)",
+                        "value": "au-syd"
+                    },
+                    {
+                        "displayname": "Tokyo (jp-tok)",
+                        "value": "jp-tok"
+                    },
+                    {
+                        "displayname": "Frankfurt (eu-de)",
+                        "value": "eu-de"
+                    },
+                    {
+                        "displayname": "London (eu-gb)",
+                        "value": "eu-gb"
+                    },
+                    {
+                        "displayname": "Madrid (eu-es)",
+                        "value": "eu-es"
+                    },
+                    {
+                        "displayname": "Dallas (us-south)",
+                        "value": "us-south"
+                    },
+                    {
+                        "displayname": "Toronto (ca-tor)",
+                        "value": "ca-tor"
+                    },
+                    {
+                        "displayname": "Washington DC (us-east)",
+                        "value": "us-east"
+                    },
+                    {
+                        "displayname": "Sao Paulo (br-sao)",
+                        "value": "br-sao"
+                    }
+                ]
             },
             {
               "key": "secrets_manager_service_plan",
@@ -159,15 +159,15 @@
                     "required":true
                 },
                 {
-                    "key": "code_engine_project_id",
+                    "key": "existing_code_engine_project_id",
                     "required":true
                 },
                 {
-                    "key": "code_engine_job_name",
+                    "key": "existing_code_engine_job_name",
                     "required":true
                 },
                 {
-                    "key": "code_engine_region",
+                    "key": "existing_code_engine_region",
                     "required":true
                 },
                 {
@@ -239,38 +239,38 @@
                 ]
             },
             "dependencies": [
-            {
-              "name": "deploy-arch-ibm-secrets-manager",
-              "description": "Create a new Secrets Manager instance.",
-              "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
-              "version": "v2.6.3",
-              "flavors": [
-                "fully-configurable"
-              ],
-              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "optional": true,
-              "on_by_default": true,
-              "input_mapping": [
                 {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "region",
-                  "version_input": "secrets_manager_region",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "service_plan",
-                  "version_input": "secrets_manager_service_plan",
-                  "reference_version": true
-                },
-                {
-                  "dependency_output": "secrets_manager_crn",
-                  "version_input": "existing_secrets_manager_crn"
-                }
-              ]
+                    "name": "deploy-arch-ibm-secrets-manager",
+                    "description": "Create a new Secrets Manager instance.",
+                    "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
+                    "version": "v2.6.3",
+                    "flavors": [
+                        "fully-configurable"
+                    ],
+                    "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+                    "optional": true,
+                    "on_by_default": true,
+                    "input_mapping": [
+                    {
+                        "dependency_input": "prefix",
+                        "version_input": "prefix",
+                        "reference_version": true
+                    },
+                    {
+                        "dependency_input": "region",
+                        "version_input": "secrets_manager_region",
+                        "reference_version": true
+                    },
+                    {
+                        "dependency_input": "service_plan",
+                        "version_input": "secrets_manager_service_plan",
+                        "reference_version": true
+                    },
+                    {
+                        "dependency_output": "secrets_manager_crn",
+                        "version_input": "existing_secrets_manager_crn"
+                    }
+                ]
             }
           ],
           "dependency_version_2": true,

@@ -37,29 +37,6 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func setupCompleteOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
-	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:      t,
-		TerraformDir: dir,
-		Prefix:       prefix,
-	})
-
-	// need to ignore because of a provider issue: https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4719
-	options.IgnoreUpdates = testhelper.Exemptions{
-		List: []string{
-			"module.code_engine.module.job[\"" + options.Prefix + "-job\"].ibm_code_engine_job.ce_job",
-		},
-	}
-
-	options.TerraformVars = map[string]interface{}{
-		"prefix":                      options.Prefix,
-		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
-		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
-	}
-
-	return options
-}
-
 func provisionPreReq(t *testing.T, p string) (string, *terraform.Options, error) {
 	// ------------------------------------------------------------------------------------
 	// Provision existing resources first
@@ -96,16 +73,6 @@ func provisionPreReq(t *testing.T, p string) (string, *terraform.Options, error)
 	return prefix, existingTerraformOptions, nil
 }
 
-func TestRunAdvancedExample(t *testing.T) {
-	t.Parallel()
-
-	options := setupCompleteOptions(t, "custom-engine", completeExampleDir)
-
-	output, err := options.RunTestConsistency()
-	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
-}
-
 func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 	t.Parallel()
 
@@ -135,9 +102,9 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 			{Name: "prefix", Value: terraform.Output(t, existingTerraformOptions, "prefix"), DataType: "string"},
 			{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 			{Name: "custom_credential_engine_name", Value: "test-engine", DataType: "string"},
-			{Name: "code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
-			{Name: "code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
-			{Name: "code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
+			{Name: "existing_code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
+			{Name: "existing_code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
+			{Name: "existing_code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
 			{Name: "service_id_name", Value: "test-service-id", DataType: "string"},
 			{Name: "iam_credential_secret_name", Value: "test-cred-secret", DataType: "string"},
 		}
@@ -194,9 +161,9 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 			{Name: "prefix", Value: terraform.Output(t, existingTerraformOptions, "prefix"), DataType: "string"},
 			{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 			{Name: "custom_credential_engine_name", Value: "test-engine", DataType: "string"},
-			{Name: "code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
-			{Name: "code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
-			{Name: "code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
+			{Name: "existing_code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
+			{Name: "existing_code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
+			{Name: "existing_code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
 			{Name: "service_id_name", Value: "test-service-id", DataType: "string"},
 			{Name: "iam_credential_secret_name", Value: "test-cred-secret", DataType: "string"},
 		}

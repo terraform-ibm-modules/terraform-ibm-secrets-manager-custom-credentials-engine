@@ -12,3 +12,5 @@ offerings:
         scc:
           instance_id: <TO BE ADDED>
           region: us-south
+        pre_validation: "tests/scripts/pre-validation-deploy-ce.sh"
+        post_validation: "tests/scripts/post-validation-destroy-ce.sh"

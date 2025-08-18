@@ -23,9 +23,9 @@ module "custom_credential_engine" {
   sm_region                                    = local.existing_secrets_manager_region
   custom_credential_engine_name                = "${local.prefix}${var.custom_credential_engine_name}"
   endpoint_type                                = var.endpoint_type
-  code_engine_project_id                       = var.code_engine_project_id
-  code_engine_job_name                         = var.code_engine_job_name
-  code_engine_region                           = var.code_engine_region
+  code_engine_project_id                       = var.existing_code_engine_project_id
+  code_engine_job_name                         = var.existing_code_engine_job_name
+  code_engine_region                           = var.existing_code_engine_region
   task_timeout                                 = var.task_timeout
   service_id_name                              = "${local.prefix}${var.service_id_name}"
   iam_credential_secret_name                   = "${local.prefix}${var.iam_credential_secret_name}"
