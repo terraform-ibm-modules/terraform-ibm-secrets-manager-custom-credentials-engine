@@ -28,7 +28,7 @@ TODO: Replace this with a description of the modules in this repo.
 ## Overview
 * [terraform-ibm-secrets-manager-custom-credentials-engine](#terraform-ibm-secrets-manager-custom-credentials-engine)
 * [Examples](./examples)
-    * [Basic example](./examples/complete)
+    * [Complete example](./examples/complete)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
