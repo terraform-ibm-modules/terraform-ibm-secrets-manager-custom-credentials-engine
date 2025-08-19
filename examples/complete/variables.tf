@@ -34,7 +34,7 @@ variable "resource_tags" {
 
 variable "existing_sm_instance_guid" {
   type        = string
-  description = "Existing Secrets Manager GUID. The existing Secret Manager instance must have private certificate engine configured. If not provided an new instance will be provisioned."
+  description = "Existing Secrets Manager GUID. The existing Secret Manager instance must have IAM credentials engine configured. If not provided an new instance needs to be provisioned."
   default     = null
 }
 
