@@ -19,8 +19,8 @@ locals {
 
 module "custom_credential_engine" {
   source                                       = "../.."
-  sm_guid                                      = local.existing_secrets_manager_guid
-  sm_region                                    = local.existing_secrets_manager_region
+  secrets_manager_guid                         = local.existing_secrets_manager_guid
+  secrets_manager_region                       = local.existing_secrets_manager_region
   custom_credential_engine_name                = "${local.prefix}${var.custom_credential_engine_name}"
   endpoint_type                                = var.endpoint_type
   code_engine_project_id                       = var.existing_code_engine_project_id

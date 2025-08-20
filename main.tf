@@ -13,13 +13,13 @@ resource "ibm_iam_service_policy" "sm_service_id_policy" {
 
   resources {
     service              = "secrets-manager"
-    resource_instance_id = var.sm_guid
+    resource_instance_id = var.secrets_manager_guid
   }
 }
 
 resource "time_sleep" "wait_for_service_id" {
   depends_on      = [ibm_iam_service_id.sm_service_id, ibm_iam_service_policy.sm_service_id_policy]
-  create_duration = "30s"
+  create_duration = "60s"
 }
 
 ##############################################################################
@@ -30,8 +30,8 @@ module "sm_iam_credential_secret" {
   depends_on                           = [time_sleep.wait_for_service_id]
   source                               = "terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm"
   version                              = "1.2.0"
-  region                               = var.sm_region
-  secrets_manager_guid                 = var.sm_guid
+  region                               = var.secrets_manager_region
+  secrets_manager_guid                 = var.secrets_manager_guid
   secret_group_id                      = var.iam_credential_secret_group_id
   sm_iam_secret_ttl                    = var.iam_credential_secret_ttl
   service_endpoints                    = var.endpoint_type
@@ -51,7 +51,7 @@ module "sm_iam_credential_secret" {
 
 resource "ibm_iam_authorization_policy" "sm_ce_policy" {
   source_service_name         = "secrets-manager"
-  source_resource_instance_id = var.sm_guid
+  source_resource_instance_id = var.secrets_manager_guid
   target_service_name         = "codeengine"
   target_resource_instance_id = var.code_engine_project_id
   roles                       = ["Viewer", "Writer"]
@@ -63,8 +63,8 @@ resource "ibm_iam_authorization_policy" "sm_ce_policy" {
 
 resource "ibm_sm_custom_credentials_configuration" "custom_credentials_configuration_instance" {
   depends_on    = [module.sm_iam_credential_secret, ibm_iam_authorization_policy.sm_ce_policy]
-  instance_id   = var.sm_guid
-  region        = var.sm_region
+  instance_id   = var.secrets_manager_guid
+  region        = var.secrets_manager_region
   name          = var.custom_credential_engine_name
   endpoint_type = var.endpoint_type
   api_key_ref   = module.sm_iam_credential_secret.secret_id

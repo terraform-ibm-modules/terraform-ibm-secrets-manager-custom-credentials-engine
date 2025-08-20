@@ -18,7 +18,7 @@ output "code_engine_key_ref" {
   value       = ibm_sm_custom_credentials_configuration.custom_credentials_configuration_instance.code_engine_key_ref
 }
 
-output "sm_custom_credentials_configuration_schema" {
+output "secrets_manager_custom_credentials_configuration_schema" {
   description = "The schema that defines the format of the input and output parameters."
   value       = ibm_sm_custom_credentials_configuration.custom_credentials_configuration_instance.schema
 }

@@ -65,8 +65,8 @@ module "secrets_manager" {
 module "custom_engine" {
   depends_on                    = [module.code_engine, module.secrets_manager]
   source                        = "../.."
-  sm_guid                       = local.sm_guid
-  sm_region                     = local.sm_region
+  secrets_manager_guid          = local.sm_guid
+  secrets_manager_region        = local.sm_region
   custom_credential_engine_name = "${var.prefix}-engine"
   code_engine_project_id        = module.code_engine.project_id
   code_engine_job_name          = module.code_engine.job["${var.prefix}-job"].name

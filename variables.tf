@@ -2,12 +2,12 @@
 # Input Variables
 ########################################################################################################################
 
-variable "sm_guid" {
+variable "secrets_manager_guid" {
   type        = string
   description = "GUID of secrets manager instance to create the secret engine in."
 }
 
-variable "sm_region" {
+variable "secrets_manager_region" {
   type        = string
   description = "The region of the secrets manager instance."
 }
@@ -55,17 +55,17 @@ variable "task_timeout" {
 
 variable "service_id_name" {
   type        = string
-  description = "The name of the service ID to be created to allow code engine job to pull secrets from SM."
+  description = "The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager."
 }
 
 variable "iam_credential_secret_name" {
   type        = string
-  description = "The name of the IAM credential secret to allow code engine job to pull secrets from SM."
+  description = "The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager."
 }
 
 variable "iam_credential_secret_group_id" {
   type        = string
-  description = "Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in default secret-group."
+  description = "Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in the default secret group."
   default     = null #tfsec:ignore:GEN001
 }
 
@@ -77,7 +77,7 @@ variable "iam_credential_secret_ttl" {
 
 variable "iam_credential_secret_auto_rotation_interval" {
   type        = string
-  description = "Specifies the rotation interval for the rotation policy."
+  description = "The rotation interval for the rotation policy."
   default     = 60
 
   validation {
@@ -88,7 +88,7 @@ variable "iam_credential_secret_auto_rotation_interval" {
 
 variable "iam_credential_secret_auto_rotation_unit" {
   type        = string
-  description = "Specifies the unit of time for rotation policy. Acceptable values are `day` or `month`."
+  description = "The unit of time for rotation policy. Acceptable values are `day` or `month`."
   default     = "day" #tfsec:ignore:general-secrets-no-plaintext-exposure
 
   validation {

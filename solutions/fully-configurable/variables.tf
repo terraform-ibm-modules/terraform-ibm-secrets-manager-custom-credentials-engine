@@ -95,12 +95,12 @@ variable "task_timeout" {
 
 variable "service_id_name" {
   type        = string
-  description = "The name of the service ID to be created to allow code engine job to pull secrets from SM."
+  description = "The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager."
 }
 
 variable "iam_credential_secret_name" {
   type        = string
-  description = "The name of the IAM credential secret to allow code engine job to pull secrets from SM."
+  description = "The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager."
 }
 
 variable "iam_credential_secret_group_id" {
@@ -111,13 +111,13 @@ variable "iam_credential_secret_group_id" {
 
 variable "iam_credential_secret_ttl" {
   type        = string
-  description = "Specify validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively)."
+  description = "The validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively)."
   default     = "7776000" #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
 }
 
 variable "iam_credential_secret_auto_rotation_interval" {
   type        = string
-  description = "Specifies the rotation interval for the rotation policy."
+  description = "The rotation interval for the rotation policy."
   default     = 60
 
   validation {
@@ -128,7 +128,7 @@ variable "iam_credential_secret_auto_rotation_interval" {
 
 variable "iam_credential_secret_auto_rotation_unit" {
   type        = string
-  description = "Specifies the unit of time for rotation policy. Acceptable values are `day` or `month`."
+  description = "The unit of time for rotation policy. Acceptable values are `day` or `month`."
   default     = "day" #tfsec:ignore:general-secrets-no-plaintext-exposure
 
   validation {

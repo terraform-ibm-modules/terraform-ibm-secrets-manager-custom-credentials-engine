@@ -14,7 +14,7 @@ output "code_engine_key_ref" {
   value       = module.custom_credential_engine.code_engine_key_ref
 }
 
-output "sm_custom_credentials_configuration_schema" {
+output "secrets_manager_custom_credentials_configuration_schema" {
   description = "The schema that defines the format of the input and output parameters."
-  value       = module.custom_credential_engine.sm_custom_credentials_configuration_schema
+  value       = module.custom_credential_engine.secrets_manager_custom_credentials_configuration_schema
 }
