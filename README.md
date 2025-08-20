@@ -40,8 +40,8 @@ Refer [here](./reference-architecture/secrets_manager_custom_credentials_engine.
 module "custom_credential_engine" {
   source                                       = "terraform-ibm-modules/secrets-manager-custom-credentials-engine/ibm"
   version                                      = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
-  sm_guid                                      = "<secrets_manager_instance_id>"
-  sm_region                                    = "<secrets_manager_instance_region>"
+  secrets_manager_guid                         = "<secrets_manager_instance_id>"
+  secrets_manager_region                       = "<secrets_manager_instance_region>"
   custom_credential_engine_name                = "My Custom Credentials Engine"
   endpoint_type                                = "public"
   code_engine_project_id                       = "<code_engine_project_id>"
