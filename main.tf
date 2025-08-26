@@ -8,8 +8,9 @@ resource "ibm_iam_service_id" "sm_service_id" {
 }
 
 resource "ibm_iam_service_policy" "sm_service_id_policy" {
-  iam_service_id = ibm_iam_service_id.sm_service_id.id
-  roles          = ["SecretsReader", "SecretTaskUpdater"]
+  iam_id = ibm_iam_service_id.sm_service_id.iam_id
+  # iam_service_id = ibm_iam_service_id.sm_service_id.id
+  roles = ["SecretsReader", "SecretTaskUpdater"]
 
   resources {
     service              = "secrets-manager"
