@@ -32,14 +32,14 @@ variable "resource_tags" {
   default     = []
 }
 
-variable "existing_sm_instance_guid" {
+variable "existing_sm_guid" {
   type        = string
-  description = "Existing Secrets Manager GUID. The existing Secret Manager instance must have IAM credentials engine configured. If not provided an new instance needs to be provisioned."
+  description = "Existing Secrets Manager GUID. The existing Secret Manager instance must have IAM credentials engine configured. If not provided, a new instance will be provisioned."
   default     = null
 }
 
-variable "existing_sm_instance_region" {
+variable "existing_sm_region" {
   type        = string
-  description = "Required if value is passed into var.existing_sm_instance_guid"
+  description = "Required if value is passed into var.existing_sm_guid"
   default     = null
 }

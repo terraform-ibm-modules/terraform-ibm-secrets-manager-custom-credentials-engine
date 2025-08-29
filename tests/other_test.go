@@ -23,9 +23,9 @@ func setupCompleteOptions(t *testing.T, prefix string, dir string) *testhelper.T
 	}
 
 	options.TerraformVars = map[string]interface{}{
-		"prefix":                      options.Prefix,
-		"existing_sm_instance_guid":   permanentResources["secretsManagerGuid"],
-		"existing_sm_instance_region": permanentResources["secretsManagerRegion"],
+		"prefix":             options.Prefix,
+		"existing_sm_guid":   permanentResources["secretsManagerGuid"],
+		"existing_sm_region": permanentResources["secretsManagerRegion"],
 	}
 
 	return options

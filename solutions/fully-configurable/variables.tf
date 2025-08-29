@@ -96,11 +96,13 @@ variable "task_timeout" {
 variable "service_id_name" {
   type        = string
   description = "The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager."
+  default     = "custom-cred-engine-service-id"
 }
 
 variable "iam_credential_secret_name" {
   type        = string
   description = "The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager."
+  default     = "custom-cred-engine-iam-secret"
 }
 
 variable "iam_credential_secret_group_id" {
