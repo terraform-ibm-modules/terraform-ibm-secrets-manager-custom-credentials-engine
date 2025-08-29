@@ -63,7 +63,7 @@ resource "ibm_iam_authorization_policy" "sm_ce_policy" {
 ##############################################################################
 
 resource "ibm_sm_custom_credentials_configuration" "custom_credentials_configuration" {
-  depends_on    = [module.sm_iam_credential_secret, ibm_iam_authorization_policy.sm_ce_policy]
+  depends_on    = [ibm_iam_authorization_policy.sm_ce_policy]
   instance_id   = var.secrets_manager_guid
   region        = var.secrets_manager_region
   name          = var.custom_credential_engine_name
