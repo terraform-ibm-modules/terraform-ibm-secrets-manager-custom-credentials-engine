@@ -93,7 +93,7 @@ You need the following permissions to run this module.
 | [ibm_iam_authorization_policy.sm_ce_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
 | [ibm_iam_service_id.sm_service_id](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_id) | resource |
 | [ibm_iam_service_policy.sm_service_id_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy) | resource |
-| [ibm_sm_custom_credentials_configuration.custom_credentials_configuration_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/sm_custom_credentials_configuration) | resource |
+| [ibm_sm_custom_credentials_configuration.custom_credentials_configuration](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/sm_custom_credentials_configuration) | resource |
 | [time_sleep.wait_for_service_id](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ### Inputs
