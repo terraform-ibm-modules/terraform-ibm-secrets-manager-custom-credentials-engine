@@ -22,6 +22,7 @@ module "custom_credential_engine" {
   secrets_manager_guid                         = local.existing_secrets_manager_guid
   secrets_manager_region                       = local.existing_secrets_manager_region
   custom_credential_engine_name                = "${local.prefix}${var.custom_credential_engine_name}"
+  skip_secrets_manager_iam_auth_policy         = var.skip_secrets_manager_iam_auth_policy
   endpoint_type                                = var.endpoint_type
   code_engine_project_id                       = var.existing_code_engine_project_id
   code_engine_job_name                         = var.existing_code_engine_job_name

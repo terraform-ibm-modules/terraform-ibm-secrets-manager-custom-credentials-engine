@@ -7,7 +7,7 @@
 
 version: "v1"
 CRA_TARGETS:
-  - CRA_TARGET: "examples/complete" # Target directory for CRA scan. If not provided, the CRA Scan will not be run.
+  - CRA_TARGET: "solutions/fully-configurable" # Target directory for CRA scan. If not provided, the CRA Scan will not be run.
     CRA_IGNORE_RULES_FILE: "cra-tf-validate-ignore-rules.json"
     PROFILE_ID: "fe96bd4d-9b37-40f2-b39f-a62760e326a3" # SCC profile ID (currently set to 'IBM Cloud Framework for Financial Services' '1.7.0' profile).
     # SCC_INSTANCE_ID: "" # The SCC instance ID to use to download profile for CRA scan. If not provided, a default global value will be used.
@@ -15,3 +15,10 @@ CRA_TARGETS:
     CRA_ENVIRONMENT_VARIABLES:  # An optional map of environment variables for CRA, where the key is the variable name and value is the value. Useful for providing TF_VARs.
       TF_VAR_prefix: "mock"
       TF_VAR_region: "us-south"
+      TF_VAR_existing_secrets_manager_crn: "crn:v1:bluemix:public:secrets-manager:us-south:a/abac0df06b644a9cabc6e44f55b3880e:79c6d411-c18f-4670-b009-b0044a238667::"
+      TF_VAR_custom_credential_engine_name": "test-engine"
+      TF_VAR"service_id_name": "test-service-id"
+      TF_VAR_iam_credential_secret_name": "test-credential-secret"
+      TF_VAR_existing_code_engine_project_id: "d731565f-835d-4c1b-b116-a03fa4e703df"
+      TF_VAR_existing_code_engine_job_name: "ce-job-name"
+      TF_VAR_existing_code_engine_region: "us-south"

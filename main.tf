@@ -51,6 +51,7 @@ module "sm_iam_credential_secret" {
 ##############################################################################
 
 resource "ibm_iam_authorization_policy" "sm_ce_policy" {
+  count                       = var.skip_secrets_manager_iam_auth_policy ? 0 : 1
   source_service_name         = "secrets-manager"
   source_resource_instance_id = var.secrets_manager_guid
   target_service_name         = "codeengine"
@@ -58,12 +59,19 @@ resource "ibm_iam_authorization_policy" "sm_ce_policy" {
   roles                       = ["Viewer", "Writer"]
 }
 
+# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4478
+resource "time_sleep" "wait_for_sm_ce_authorization_policy" {
+  count           = var.skip_secrets_manager_iam_auth_policy ? 0 : 1
+  depends_on      = [ibm_iam_authorization_policy.sm_ce_policy]
+  create_duration = "30s"
+}
+
 ##############################################################################
 # Secrets Manager Custom Credentials Engine Module
 ##############################################################################
 
 resource "ibm_sm_custom_credentials_configuration" "custom_credentials_configuration" {
-  depends_on    = [ibm_iam_authorization_policy.sm_ce_policy]
+  depends_on    = [time_sleep.wait_for_sm_ce_authorization_policy]
   instance_id   = var.secrets_manager_guid
   region        = var.secrets_manager_region
   name          = var.custom_credential_engine_name

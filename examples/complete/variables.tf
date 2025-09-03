@@ -11,13 +11,11 @@ variable "ibmcloud_api_key" {
 variable "region" {
   type        = string
   description = "Region to provision all resources created by this example."
-  default     = "us-south"
 }
 
 variable "prefix" {
   type        = string
   description = "A string value to prefix to all resources created by this example."
-  default     = "sm-custom-cred"
 }
 
 variable "resource_group" {

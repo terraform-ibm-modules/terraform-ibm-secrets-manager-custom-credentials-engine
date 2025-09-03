@@ -29,7 +29,7 @@ These components are needed in order to create the custom credentials secret in 
 
 ## Reference architectures
 
-Refer [here](./reference-architecture/secrets_manager_custom_credentials_engine.svg) for reference architecture.
+[Secrets Manager Custom Credential Engine](./reference-architecture/secrets_manager_custom_credentials_engine.svg)
 
 
 ## terraform-ibm-secrets-manager-custom-credentials-engine
@@ -38,18 +38,18 @@ Refer [here](./reference-architecture/secrets_manager_custom_credentials_engine.
 
 ```hcl
 module "custom_credential_engine" {
-  source                                       = "terraform-ibm-modules/secrets-manager-custom-credentials-engine/ibm"
-  version                                      = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
-  secrets_manager_guid                         = "<secrets_manager_instance_id>"
-  secrets_manager_region                       = "<secrets_manager_instance_region>"
-  custom_credential_engine_name                = "My Custom Credentials Engine"
-  endpoint_type                                = "public"
-  code_engine_project_id                       = "<code_engine_project_id>"
-  code_engine_job_name                         = "<code_engine_project_job_name>"
-  code_engine_region                           = "<code_engine_region>"
-  task_timeout                                 = "5m"
-  service_id_name                              = "My Service ID"
-  iam_credential_secret_name                   = "My Credentials Secret"
+  source                        = "terraform-ibm-modules/secrets-manager-custom-credentials-engine/ibm"
+  version                       = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
+  secrets_manager_guid          = "<secrets_manager_instance_id>"
+  secrets_manager_region        = "<secrets_manager_instance_region>"
+  custom_credential_engine_name = "My Custom Credentials Engine"
+  endpoint_type                 = "public"
+  code_engine_project_id        = "<code_engine_project_id>"
+  code_engine_job_name          = "<code_engine_project_job_name>"
+  code_engine_region            = "<code_engine_region>"
+  task_timeout                  = "5m"
+  service_id_name               = "My Service ID"
+  iam_credential_secret_name    = "My Credentials Secret"
 }
 
 ```
@@ -95,6 +95,7 @@ You need the following permissions to run this module.
 | [ibm_iam_service_policy.sm_service_id_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy) | resource |
 | [ibm_sm_custom_credentials_configuration.custom_credentials_configuration](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/sm_custom_credentials_configuration) | resource |
 | [time_sleep.wait_for_service_id](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [time_sleep.wait_for_sm_ce_authorization_policy](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ### Inputs
 
@@ -114,6 +115,7 @@ You need the following permissions to run this module.
 | <a name="input_secrets_manager_guid"></a> [secrets\_manager\_guid](#input\_secrets\_manager\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
 | <a name="input_secrets_manager_region"></a> [secrets\_manager\_region](#input\_secrets\_manager\_region) | The region of the secrets manager instance. | `string` | n/a | yes |
 | <a name="input_service_id_name"></a> [service\_id\_name](#input\_service\_id\_name) | The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager. | `string` | n/a | yes |
+| <a name="input_skip_secrets_manager_iam_auth_policy"></a> [skip\_secrets\_manager\_iam\_auth\_policy](#input\_skip\_secrets\_manager\_iam\_auth\_policy) | Whether to skip the creation of the IAM authorization policies required between the Code engine project and Secrets Manager instance(if you are using an existing Secrets Manager instance, attempting to re-create can cause conflicts if the policies already exist). If set to false, policies will be created that grants the Secrets Manager instance 'Viewer' and 'Writer' access to the Code engine project. | `bool` | `false` | no |
 | <a name="input_task_timeout"></a> [task\_timeout](#input\_task\_timeout) | The maximum allowed time for a code engine job to be completed. | `string` | `"5m"` | no |
 
 ### Outputs
