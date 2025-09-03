@@ -56,9 +56,9 @@ variable "custom_credential_engine_name" {
   description = "The name of the custom credentials engine to be created."
 }
 
-variable "skip_secrets_manager_iam_auth_policy" {
+variable "skip_secrets_manager_code_engine_auth_policy" {
   type        = bool
-  description = "Whether to skip the creation of the IAM authorization policies required between the Code engine project and Secrets Manager instance(if you are using an existing Secrets Manager instance, attempting to re-create can cause conflicts if the policies already exist). If set to false, policies will be created that grants the Secrets Manager instance 'Viewer' and 'Writer' access to the Code engine project."
+  description = "Whether to skip the creation of the IAM authorization policies required between the Code engine project and Secrets Manager instance. If set to false, policies will be created that grants the Secrets Manager instance 'Viewer' and 'Writer' access to the Code engine project."
   default     = false
 }
 
