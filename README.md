@@ -1,26 +1,20 @@
-<!-- Update this title with a descriptive name. Use sentence case. -->
-# Secrets Manager custom credentials engine
+# Secrets Manager custom credentials engine module
 
-<!--
-Update status and "latest release" badges:
-  1. For the status options, see https://terraform-ibm-modules.github.io/documentation/#/badge-status
-  2. Update the "latest release" badge to point to the correct module's repo. Replace "terraform-ibm-module-template" in two places.
--->
-[![Incubating (Not yet consumable)](https://img.shields.io/badge/status-Incubating%20(Not%20yet%20consumable)-red)](https://terraform-ibm-modules.github.io/documentation/#/badge-status)
-[![latest release](https://img.shields.io/github/v/release/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine?logo=GitHub&sort=semver)](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/releases/latest)
+[![Graduated (Supported)](https://img.shields.io/badge/Status-Graduated%20(Supported)-brightgreen)](https://terraform-ibm-modules.github.io/documentation/#/badge-status)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![latest release](https://img.shields.io/github/v/release/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine?logo=GitHub&sort=semver)](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/releases/latest)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-<!--
-Add a description of modules in this repo.
-Expand on the repo short description in the .github/settings.yml file.
+This module configures a custom credentials engine for a Secrets Manager instance. For more information about enabling Secrets Manager for custom credentials engine, see [Preparing to create custom credentials engine](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-custom-credentials-prepare).
 
-For information, see "Module names and descriptions" at
-https://terraform-ibm-modules.github.io/documentation/#/implementation-guidelines?id=module-names-and-descriptions
--->
+The module handles the following components:
 
-TODO: Replace this with a description of the modules in this repo.
+- [IAM service authorization]((https://cloud.ibm.com/docs/account?topic=account-serviceauth&interface=ui)) policy creation between Secrets Manager as source and Code Engine Project as target
+- [IAM credentials secret](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-iam-credentials&interface=terraform) creation for allowing code engine job to fetch secrets
+- [Custom credentials engine](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-custom-credentials-config&interface=terraform)
+
+These components are needed in order to create the custom credentials secret in SM instance.
 
 
 <!-- The following content is automatically populated by the pre-commit hook -->
@@ -28,130 +22,110 @@ TODO: Replace this with a description of the modules in this repo.
 ## Overview
 * [terraform-ibm-secrets-manager-custom-credentials-engine](#terraform-ibm-secrets-manager-custom-credentials-engine)
 * [Examples](./examples)
-    * [Advanced example](./examples/advanced)
-    * [Basic example](./examples/basic)
+    * [Complete example](./examples/complete)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
 
-<!--
-If this repo contains any reference architectures, uncomment the heading below and link to them.
-(Usually in the `/reference-architectures` directory.)
-See "Reference architecture" in the public documentation at
-https://terraform-ibm-modules.github.io/documentation/#/implementation-guidelines?id=reference-architecture
--->
-<!-- ## Reference architectures -->
+## Reference architectures
+
+[Secrets Manager Custom Credential Engine](./reference-architecture/secrets_manager_custom_credentials_engine.svg)
 
 
-<!-- Replace this heading with the name of the root level module (the repo name) -->
 ## terraform-ibm-secrets-manager-custom-credentials-engine
 
 ### Usage
 
-<!--
-Add an example of the use of the module in the following code block.
-
-Use real values instead of "var.<var_name>" or other placeholder values
-unless real values don't help users know what to change.
--->
-
 ```hcl
-terraform {
-  required_version = ">= 1.9.0"
-  required_providers {
-    ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = "X.Y.Z"  # Lock into a provider version that satisfies the module constraints
-    }
-  }
+module "custom_credential_engine" {
+  source                        = "terraform-ibm-modules/secrets-manager-custom-credentials-engine/ibm"
+  version                       = "X.X.X" # Replace "X.X.X" with a release version to lock into a specific release
+  secrets_manager_guid          = "<secrets_manager_instance_id>"
+  secrets_manager_region        = "<secrets_manager_instance_region>"
+  custom_credential_engine_name = "My Custom Credentials Engine"
+  endpoint_type                 = "public"
+  code_engine_project_id        = "<code_engine_project_id>"
+  code_engine_job_name          = "<code_engine_project_job_name>"
+  code_engine_region            = "<code_engine_region>"
+  task_timeout                  = "5m"
+  service_id_name               = "My Service ID"
+  iam_credential_secret_name    = "My Credentials Secret"
 }
 
-locals {
-    region = "us-south"
-}
-
-provider "ibm" {
-  ibmcloud_api_key = "XXXXXXXXXX"  # replace with apikey value
-  region           = local.region
-}
-
-module "module_template" {
-  source            = "terraform-ibm-modules/<replace>/ibm"
-  version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
-  region            = local.region
-  name              = "instance-name"
-  resource_group_id = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX" # Replace with the actual ID of resource group to use
-}
 ```
 
-### Required access policies
 
-<!-- PERMISSIONS REQUIRED TO RUN MODULE
-If this module requires permissions, uncomment the following block and update
-the sample permissions, following the format.
-Replace the 'Sample IBM Cloud' service and roles with applicable values.
-The required information can usually be found in the services official
-IBM Cloud documentation.
-To view all available service permissions, you can go in the
-console at Manage > Access (IAM) > Access groups and click into an existing group
-(or create a new one) and in the 'Access' tab click 'Assign access'.
--->
 
-<!--
-You need the following permissions to run this module:
+### Required IAM access policies
 
-- Service
-    - **Resource group only**
-        - `Viewer` access on the specific resource group
-    - **Sample IBM Cloud** service
-        - `Editor` platform access
+You need the following permissions to run this module.
+
+- Account Management
+    - **IAM Identity** services
+        - `Administrator` platform access
+        - `Service ID Creator` service access
+    - **All Identity and Access enabled** services
+        - `Administrator` platform access
+- IAM Services
+    - **Secrets Manager** service
+        - `Administrator` platform access
         - `Manager` service access
--->
 
-<!-- NO PERMISSIONS FOR MODULE
-If no permissions are required for the module, uncomment the following
-statement instead the previous block.
--->
-
-<!-- No permissions are needed to run this module.-->
-
-
-<!-- The following content is automatically populated by the pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.71.2, < 2.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.2, < 2.0.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
 
 ### Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_sm_iam_credential_secret"></a> [sm\_iam\_credential\_secret](#module\_sm\_iam\_credential\_secret) | terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm | 1.2.0 |
 
 ### Resources
 
 | Name | Type |
 |------|------|
-| [ibm_resource_instance.cos_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_instance) | resource |
+| [ibm_iam_authorization_policy.sm_ce_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
+| [ibm_iam_service_id.sm_service_id](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_id) | resource |
+| [ibm_iam_service_policy.sm_service_id_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy) | resource |
+| [ibm_sm_custom_credentials_configuration.custom_credentials_configuration](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/sm_custom_credentials_configuration) | resource |
+| [time_sleep.wait_for_service_id](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [time_sleep.wait_for_sm_ce_authorization_policy](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | A descriptive name used to identify the resource instance. | `string` | n/a | yes |
-| <a name="input_plan"></a> [plan](#input\_plan) | The name of the plan type supported by service. | `string` | `"standard"` | no |
-| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The ID of the resource group where you want to create the service. | `string` | n/a | yes |
-| <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | List of resource tag to associate with the instance. | `list(string)` | `[]` | no |
+| <a name="input_code_engine_job_name"></a> [code\_engine\_job\_name](#input\_code\_engine\_job\_name) | The code engine job name used by this custom credentials configuration. | `string` | n/a | yes |
+| <a name="input_code_engine_project_id"></a> [code\_engine\_project\_id](#input\_code\_engine\_project\_id) | The Project ID of the code engine project used by the custom credentials configuration. | `string` | n/a | yes |
+| <a name="input_code_engine_region"></a> [code\_engine\_region](#input\_code\_engine\_region) | The region of the code engine project. | `string` | n/a | yes |
+| <a name="input_custom_credential_engine_name"></a> [custom\_credential\_engine\_name](#input\_custom\_credential\_engine\_name) | The name of the custom credentials engine to be created. | `string` | n/a | yes |
+| <a name="input_endpoint_type"></a> [endpoint\_type](#input\_endpoint\_type) | The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private`. | `string` | `"public"` | no |
+| <a name="input_iam_credential_secret_auto_rotation_interval"></a> [iam\_credential\_secret\_auto\_rotation\_interval](#input\_iam\_credential\_secret\_auto\_rotation\_interval) | The rotation interval for the rotation policy. | `string` | `60` | no |
+| <a name="input_iam_credential_secret_auto_rotation_unit"></a> [iam\_credential\_secret\_auto\_rotation\_unit](#input\_iam\_credential\_secret\_auto\_rotation\_unit) | The unit of time for rotation policy. Acceptable values are `day` or `month`. | `string` | `"day"` | no |
+| <a name="input_iam_credential_secret_group_id"></a> [iam\_credential\_secret\_group\_id](#input\_iam\_credential\_secret\_group\_id) | Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in the default secret group. | `string` | `null` | no |
+| <a name="input_iam_credential_secret_labels"></a> [iam\_credential\_secret\_labels](#input\_iam\_credential\_secret\_labels) | Optional list of up to 30 labels to be created on the secret. Labels can be used to search for secrets in the Secrets Manager instance. | `list(string)` | `[]` | no |
+| <a name="input_iam_credential_secret_name"></a> [iam\_credential\_secret\_name](#input\_iam\_credential\_secret\_name) | The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager. | `string` | n/a | yes |
+| <a name="input_iam_credential_secret_ttl"></a> [iam\_credential\_secret\_ttl](#input\_iam\_credential\_secret\_ttl) | Specify validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively). | `string` | `"7776000"` | no |
+| <a name="input_secrets_manager_guid"></a> [secrets\_manager\_guid](#input\_secrets\_manager\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
+| <a name="input_secrets_manager_region"></a> [secrets\_manager\_region](#input\_secrets\_manager\_region) | The region of the secrets manager instance. | `string` | n/a | yes |
+| <a name="input_service_id_name"></a> [service\_id\_name](#input\_service\_id\_name) | The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager. | `string` | n/a | yes |
+| <a name="input_skip_secrets_manager_code_engine_auth_policy"></a> [skip\_secrets\_manager\_code\_engine\_auth\_policy](#input\_skip\_secrets\_manager\_code\_engine\_auth\_policy) | Whether to skip the creation of the IAM authorization policies required between the Code engine project and Secrets Manager instance. If set to false, policies will be created that grants the Secrets Manager instance 'Viewer' and 'Writer' access to the Code engine project. | `bool` | `false` | no |
+| <a name="input_task_timeout"></a> [task\_timeout](#input\_task\_timeout) | The maximum allowed time for a code engine job to be completed. | `string` | `"5m"` | no |
 
 ### Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_account_id"></a> [account\_id](#output\_account\_id) | An alpha-numeric value identifying the account ID. |
-| <a name="output_crn"></a> [crn](#output\_crn) | The CRN of the resource instance. |
-| <a name="output_guid"></a> [guid](#output\_guid) | The GUID of the resource instance. |
-| <a name="output_id"></a> [id](#output\_id) | The unique identifier of the resource instance. |
+| <a name="output_code_engine_key_ref"></a> [code\_engine\_key\_ref](#output\_code\_engine\_key\_ref) | The IAM API key used by the credentials system to access the secrets manager instance. |
+| <a name="output_custom_config_engine_id"></a> [custom\_config\_engine\_id](#output\_custom\_config\_engine\_id) | The unique identifier of the engine created. |
+| <a name="output_custom_config_engine_name"></a> [custom\_config\_engine\_name](#output\_custom\_config\_engine\_name) | The name of the engine created. |
+| <a name="output_secrets_manager_custom_credentials_configuration_schema"></a> [secrets\_manager\_custom\_credentials\_configuration\_schema](#output\_secrets\_manager\_custom\_credentials\_configuration\_schema) | The schema that defines the format of the input and output parameters. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->

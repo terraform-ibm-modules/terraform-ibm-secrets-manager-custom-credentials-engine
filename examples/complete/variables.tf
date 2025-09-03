@@ -2,14 +2,6 @@
 # Input variables
 ########################################################################################################################
 
-#
-# Module developer tips:
-#   - Examples are references that consumers can use to see how the module can be consumed. They are not designed to be
-#     flexible re-usable solutions for general consumption, so do not expose any more variables here and instead hard
-#     code things in the example main.tf with code comments explaining the different configurations.
-#   - For the same reason as above, do not add default values to the example inputs.
-#
-
 variable "ibmcloud_api_key" {
   type        = string
   description = "The IBM Cloud API Key."
@@ -36,4 +28,16 @@ variable "resource_tags" {
   type        = list(string)
   description = "List of resource tag to associate with all resource instances created by this example."
   default     = []
+}
+
+variable "existing_sm_guid" {
+  type        = string
+  description = "Existing Secrets Manager GUID. The existing Secret Manager instance must have IAM credentials engine configured. If not provided, a new instance will be provisioned."
+  default     = null
+}
+
+variable "existing_sm_region" {
+  type        = string
+  description = "Required if value is passed into var.existing_sm_guid"
+  default     = null
 }

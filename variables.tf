@@ -2,35 +2,109 @@
 # Input Variables
 ########################################################################################################################
 
-#
-# Developer tips:
-#   - Below are some common module input variables
-#   - They should be updated for input variables applicable to the module being added
-#   - Use variable validation when possible
-#
-
-variable "name" {
+variable "secrets_manager_guid" {
   type        = string
-  description = "A descriptive name used to identify the resource instance."
+  description = "GUID of secrets manager instance to create the secret engine in."
 }
 
-variable "plan" {
+variable "secrets_manager_region" {
   type        = string
-  description = "The name of the plan type supported by service."
-  default     = "standard"
+  description = "The region of the secrets manager instance."
+}
+
+variable "custom_credential_engine_name" {
+  type        = string
+  description = "The name of the custom credentials engine to be created."
+}
+
+variable "skip_secrets_manager_code_engine_auth_policy" {
+  type        = bool
+  description = "Whether to skip the creation of the IAM authorization policies required between the Code engine project and Secrets Manager instance. If set to false, policies will be created that grants the Secrets Manager instance 'Viewer' and 'Writer' access to the Code engine project."
+  default     = false
+}
+
+variable "endpoint_type" {
+  type        = string
+  description = "The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private`."
+  default     = "public"
   validation {
-    condition     = contains(["standard", "cos-one-rate-plan"], var.plan)
-    error_message = "The specified pricing plan is not available. The following plans are supported: 'standard', 'cos-one-rate-plan'"
+    condition     = contains(["public", "private"], var.endpoint_type)
+    error_message = "The specified endpoint_type is not a valid selection!"
   }
 }
 
-variable "resource_group_id" {
+variable "code_engine_project_id" {
   type        = string
-  description = "The ID of the resource group where you want to create the service."
+  description = "The Project ID of the code engine project used by the custom credentials configuration."
 }
 
-variable "resource_tags" {
+variable "code_engine_job_name" {
+  type        = string
+  description = "The code engine job name used by this custom credentials configuration."
+}
+
+variable "code_engine_region" {
+  type        = string
+  description = "The region of the code engine project."
+}
+
+variable "task_timeout" {
+  type        = string
+  description = "The maximum allowed time for a code engine job to be completed."
+  default     = "5m"
+
+  validation {
+    condition     = can(regex("^\\d+[smh]$", var.task_timeout))
+    error_message = "task_timeout must be a string with a number followed by 's', 'm', or 'h' (e.g., '30s', '3m', '1h')."
+  }
+}
+
+variable "service_id_name" {
+  type        = string
+  description = "The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager."
+}
+
+variable "iam_credential_secret_name" {
+  type        = string
+  description = "The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager."
+}
+
+variable "iam_credential_secret_group_id" {
+  type        = string
+  description = "Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in the default secret group."
+  default     = null #tfsec:ignore:GEN001
+}
+
+variable "iam_credential_secret_ttl" {
+  type        = string
+  description = "Specify validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively)."
+  default     = "7776000" #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
+}
+
+variable "iam_credential_secret_auto_rotation_interval" {
+  type        = string
+  description = "The rotation interval for the rotation policy."
+  default     = 60
+
+  validation {
+    condition     = var.iam_credential_secret_auto_rotation_interval > 0
+    error_message = "Value for `iam_credential_secret_auto_rotation_intervals` must be greater than 0 when auto-rotation is enabled."
+  }
+}
+
+variable "iam_credential_secret_auto_rotation_unit" {
+  type        = string
+  description = "The unit of time for rotation policy. Acceptable values are `day` or `month`."
+  default     = "day" #tfsec:ignore:general-secrets-no-plaintext-exposure
+
+  validation {
+    condition     = contains(["day", "month"], var.iam_credential_secret_auto_rotation_unit)
+    error_message = "Value for `iam_credential_secret_auto_rotation_unit` must be either 'day' or 'month' when auto-rotation is enabled."
+  }
+}
+
+variable "iam_credential_secret_labels" {
   type        = list(string)
-  description = "List of resource tag to associate with the instance."
+  description = "Optional list of up to 30 labels to be created on the secret. Labels can be used to search for secrets in the Secrets Manager instance."
   default     = []
 }
