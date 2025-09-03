@@ -17,7 +17,7 @@ CRA_TARGETS:
       TF_VAR_region: "us-south"
       TF_VAR_existing_secrets_manager_crn: "crn:v1:bluemix:public:secrets-manager:us-south:a/abac0df06b644a9cabc6e44f55b3880e:79c6d411-c18f-4670-b009-b0044a238667::"
       TF_VAR_custom_credential_engine_name: "test-engine"
-      TF_VAR"service_id_name: "test-service-id"
+      TF_VAR_service_id_name: "test-service-id"
       TF_VAR_iam_credential_secret_name: "test-credential-secret"
       TF_VAR_existing_code_engine_project_id: "d731565f-835d-4c1b-b116-a03fa4e703df"
       TF_VAR_existing_code_engine_job_name: "ce-job-name"
