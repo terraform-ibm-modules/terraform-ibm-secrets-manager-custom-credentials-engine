@@ -178,6 +178,7 @@
             },
             {
               "key": "endpoint_type",
+              "hidden": true,
               "options": [
                 {
                   "displayname": "private",
