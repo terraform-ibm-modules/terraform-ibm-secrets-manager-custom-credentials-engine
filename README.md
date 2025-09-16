@@ -43,7 +43,7 @@ module "custom_credential_engine" {
   secrets_manager_guid          = "<secrets_manager_instance_id>"
   secrets_manager_region        = "<secrets_manager_instance_region>"
   custom_credential_engine_name = "My Custom Credentials Engine"
-  endpoint_type                 = "public"
+  endpoint_type                 = "private"
   code_engine_project_id        = "<code_engine_project_id>"
   code_engine_job_name          = "<code_engine_project_job_name>"
   code_engine_region            = "<code_engine_region>"

@@ -65,7 +65,7 @@ variable "skip_secrets_manager_code_engine_auth_policy" {
 variable "endpoint_type" {
   type        = string
   description = "The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private`"
-  default     = "public"
+  default     = "private"
 
   validation {
     condition     = contains(["public", "private"], var.endpoint_type)
