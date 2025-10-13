@@ -29,7 +29,7 @@ These components are needed in order to create the custom credentials secret in 
 
 ## Reference architectures
 
-[Secrets Manager Custom Credential Engine](./reference-architecture/secrets_manager_custom_credentials_engine.svg)
+[Secrets Manager Custom Credential Engine](./reference-architectures/secrets_manager_custom_credentials_engine.svg)
 
 
 ## terraform-ibm-secrets-manager-custom-credentials-engine

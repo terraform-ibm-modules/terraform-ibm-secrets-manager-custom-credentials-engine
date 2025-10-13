@@ -290,7 +290,7 @@
               {
                 "diagram": {
                   "caption": "Secrets Manager Custom Credentials Engine",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/main/reference-architecture/secrets_manager_custom_credentials_engine.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/main/reference-architectures/secrets_manager_custom_credentials_engine.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture automates the setup of IBM Secrets Manager Custom Credentials Engine. The modular design includes the creation of a service authorization policy and IAM credentials secrets that are needed for provisioning the engine configuration."
