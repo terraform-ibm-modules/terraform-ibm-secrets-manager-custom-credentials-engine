@@ -22,7 +22,7 @@ These components are needed in order to create the custom credentials secret in 
 ## Overview
 * [terraform-ibm-secrets-manager-custom-credentials-engine](#terraform-ibm-secrets-manager-custom-credentials-engine)
 * [Examples](./examples)
-    * [Complete example](./examples/complete)
+    * <div style="display: inline-block;"><a href="./examples/complete">Complete example</a></div> <div style="display: inline-block; vertical-align: middle;"><a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=smcce-complete-example&repository=github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-custom-credentials-engine/tree/main/examples/complete" target="_blank"><img src="https://cloud.ibm.com/media/docs/images/icons/Deploy_to_cloud.svg" alt="Deploy to IBM Cloud button"></a></div>
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
