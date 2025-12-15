@@ -2,10 +2,10 @@
 package test
 
 import (
-	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 )
 
@@ -27,7 +27,7 @@ func setupCompleteOptions(t *testing.T, prefix string, dir string) *testhelper.T
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
 		TerraformDir: dir,
-		Region:       validRegions[rand.Intn(len(validRegions))],
+		Region:       validRegions[common.CryptoIntn(len(validRegions))],
 		Prefix:       prefix,
 	})
 
