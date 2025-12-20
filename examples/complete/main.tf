@@ -4,7 +4,7 @@
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
-  version = "1.4.0"
+  version = "1.4.7"
   # if an existing resource group is not set (null) create a new one using prefix
   resource_group_name          = var.resource_group == null ? "${var.prefix}-resource-group" : null
   existing_resource_group_name = var.resource_group
@@ -16,7 +16,7 @@ module "resource_group" {
 
 module "code_engine" {
   source            = "terraform-ibm-modules/code-engine/ibm"
-  version           = "4.6.10"
+  version           = "4.7.9"
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
   jobs = {
@@ -48,7 +48,7 @@ locals {
 
 module "secrets_manager" {
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.11.8"
+  version              = "2.12.7"
   count                = var.existing_sm_guid == null ? 1 : 0
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
