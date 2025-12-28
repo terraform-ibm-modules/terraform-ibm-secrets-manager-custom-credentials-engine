@@ -30,7 +30,7 @@ resource "time_sleep" "wait_for_service_id" {
 module "sm_iam_credential_secret" {
   depends_on                           = [time_sleep.wait_for_service_id]
   source                               = "terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm"
-  version                              = "1.2.16"
+  version                              = "1.2.17"
   region                               = var.secrets_manager_region
   secrets_manager_guid                 = var.secrets_manager_guid
   secret_group_id                      = var.iam_credential_secret_group_id
