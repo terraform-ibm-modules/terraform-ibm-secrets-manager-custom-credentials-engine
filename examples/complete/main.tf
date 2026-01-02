@@ -16,7 +16,7 @@ module "resource_group" {
 
 module "code_engine" {
   source            = "terraform-ibm-modules/code-engine/ibm"
-  version           = "4.7.20"
+  version           = "4.7.21"
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
   jobs = {
@@ -48,7 +48,7 @@ locals {
 
 module "secrets_manager" {
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.12.13"
+  version              = "2.12.14"
   count                = var.existing_sm_guid == null ? 1 : 0
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
