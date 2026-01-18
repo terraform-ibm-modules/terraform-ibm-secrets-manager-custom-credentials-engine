@@ -16,7 +16,7 @@ module "resource_group" {
 
 module "code_engine" {
   source            = "terraform-ibm-modules/code-engine/ibm"
-  version           = "4.7.23"
+  version           = "4.7.24"
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
   jobs = {
