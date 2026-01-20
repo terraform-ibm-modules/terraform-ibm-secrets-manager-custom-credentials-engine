@@ -73,4 +73,5 @@ module "custom_engine" {
   code_engine_region            = var.region
   service_id_name               = "${var.prefix}-sm_custom_credential_service_id"
   iam_credential_secret_name    = "${var.prefix}-iam-secret-for-custom-credential"
+  iam_credential_secret_labels  = ["use:code-engine", "job:${var.prefix}-job"]
 }
