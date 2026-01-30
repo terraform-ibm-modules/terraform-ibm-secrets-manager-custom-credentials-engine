@@ -16,7 +16,7 @@ module "resource_group" {
 
 module "code_engine" {
   source            = "terraform-ibm-modules/code-engine/ibm"
-  version           = "4.7.24"
+  version           = "4.7.25"
   resource_group_id = module.resource_group.resource_group_id
   project_name      = "${var.prefix}-project"
   jobs = {
@@ -48,7 +48,7 @@ locals {
 
 module "secrets_manager" {
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.12.18"
+  version              = "2.12.25"
   count                = var.existing_sm_guid == null ? 1 : 0
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
@@ -73,4 +73,5 @@ module "custom_engine" {
   code_engine_region            = var.region
   service_id_name               = "${var.prefix}-sm_custom_credential_service_id"
   iam_credential_secret_name    = "${var.prefix}-iam-secret-for-custom-credential"
+  iam_credential_secret_labels  = ["use:code-engine", "job:${var.prefix}-job"]
 }
