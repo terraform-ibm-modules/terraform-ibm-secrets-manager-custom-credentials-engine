@@ -48,7 +48,7 @@ locals {
 
 module "secrets_manager" {
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.13.4"
+  version              = "2.13.5"
   count                = var.existing_sm_guid == null ? 1 : 0
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
