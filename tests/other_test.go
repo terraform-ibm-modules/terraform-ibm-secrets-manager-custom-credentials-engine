@@ -17,7 +17,7 @@ var validRegions = []string{
 	"eu-gb",
 	"eu-es",
 	"us-south",
-	"ca-mon",
+	// "ca-mon", Region not supported by Code Engine https://cloud.ibm.com/docs/codeengine?topic=codeengine-regions, Issue https://github.ibm.com/GoldenEye/issues/issues/18039#issuecomment-187757604
 	"ca-tor",
 	"us-east",
 	"br-sao",
