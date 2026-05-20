@@ -2,6 +2,7 @@
 package test
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -40,9 +41,9 @@ func provisionPreReq(t *testing.T, p string) (string, *terraform.Options, error)
 	// ------------------------------------------------------------------------------------
 	// Provision existing resources first
 	// ------------------------------------------------------------------------------------
-	prefix := fmt.Sprintf("%s-%s", p, strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("%s-%s", p, strings.ToLower(random.UniqueID()))
 	realTerraformDir := "./existing-resources"
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueID())))
 
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
@@ -61,8 +62,8 @@ func provisionPreReq(t *testing.T, p string) (string, *terraform.Options, error)
 		Upgrade: true,
 	})
 
-	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
-	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
+	terraform.WorkspaceSelectOrNewContext(t, context.Background(), existingTerraformOptions, prefix)
+	_, existErr := terraform.InitAndApplyContextE(t, context.Background(), existingTerraformOptions)
 	if existErr != nil {
 		// assert.True(t, existErr == nil, "Init and Apply of temp existing resource failed")
 		return "", nil, existErr
@@ -96,12 +97,12 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-			{Name: "prefix", Value: terraform.Output(t, existingTerraformOptions, "prefix"), DataType: "string"},
+			{Name: "prefix", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "prefix"), DataType: "string"},
 			{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 			{Name: "custom_credential_engine_name", Value: "test-engine", DataType: "string"},
-			{Name: "existing_code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
-			{Name: "existing_code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
-			{Name: "existing_code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
+			{Name: "existing_code_engine_project_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
+			{Name: "existing_code_engine_job_name", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
+			{Name: "existing_code_engine_region", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "region"), DataType: "string"},
 			{Name: "service_id_name", Value: "test-service-id", DataType: "string"},
 			{Name: "iam_credential_secret_name", Value: "test-cred-secret", DataType: "string"},
 		}
@@ -123,8 +124,8 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
 	} else {
 		logger.Log(t, "START: Destroy (prereq resources)")
-		terraform.Destroy(t, existingTerraformOptions)
-		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
+		terraform.DestroyContext(t, context.Background(), existingTerraformOptions)
+		terraform.WorkspaceDeleteContext(t, context.Background(), existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (prereq resources)")
 	}
 }
@@ -155,12 +156,12 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-			{Name: "prefix", Value: terraform.Output(t, existingTerraformOptions, "prefix"), DataType: "string"},
+			{Name: "prefix", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "prefix"), DataType: "string"},
 			{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 			{Name: "custom_credential_engine_name", Value: "test-engine", DataType: "string"},
-			{Name: "existing_code_engine_project_id", Value: terraform.Output(t, existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
-			{Name: "existing_code_engine_job_name", Value: terraform.Output(t, existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
-			{Name: "existing_code_engine_region", Value: terraform.Output(t, existingTerraformOptions, "region"), DataType: "string"},
+			{Name: "existing_code_engine_project_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "code_engine_project_id"), DataType: "string"},
+			{Name: "existing_code_engine_job_name", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "code_engine_job_name"), DataType: "string"},
+			{Name: "existing_code_engine_region", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "region"), DataType: "string"},
 			{Name: "service_id_name", Value: "test-service-id", DataType: "string"},
 			{Name: "iam_credential_secret_name", Value: "test-cred-secret", DataType: "string"},
 		}
@@ -182,8 +183,8 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
 	} else {
 		logger.Log(t, "START: Destroy (prereq resources)")
-		terraform.Destroy(t, existingTerraformOptions)
-		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
+		terraform.DestroyContext(t, context.Background(), existingTerraformOptions)
+		terraform.WorkspaceDeleteContext(t, context.Background(), existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (prereq resources)")
 	}
 }
