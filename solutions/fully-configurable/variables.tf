@@ -118,14 +118,9 @@ variable "iam_credential_secret_group_id" {
 }
 
 variable "iam_credential_secret_ttl" {
-  type        = string
-  description = "Specify validity / lease duration of ServiceID API key in seconds. Must be an integer string between 60 and 7776000 (90 days)."
-  default     = "7776000" #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
-
-  validation {
-    condition     = (var.iam_credential_secret_ttl >= 60) && (var.iam_credential_secret_ttl <= 7776000)
-    error_message = "time-to-live (TTL) must be between 60 seconds and 7776000 seconds (90 days)."
-  }
+  type        = number
+  description = "Specify validity / lease duration of ServiceID API key in seconds. Must be an integer between 60 and 7776000 (90 days)."
+  default     = 7776000 #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
 }
 
 variable "iam_credential_secret_auto_rotation_interval" {
