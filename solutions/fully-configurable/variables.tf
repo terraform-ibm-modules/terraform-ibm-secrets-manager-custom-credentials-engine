@@ -118,9 +118,9 @@ variable "iam_credential_secret_group_id" {
 }
 
 variable "iam_credential_secret_ttl" {
-  type        = string
-  description = "The validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively)."
-  default     = "7776000" #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
+  type        = number
+  description = "Specify validity / lease duration of ServiceID API key in seconds. Must be an integer between 60 and 7776000 (90 days)."
+  default     = 7776000 #tfsec:ignore:general-secrets-no-plaintext-exposure Default set to 90days
 }
 
 variable "iam_credential_secret_auto_rotation_interval" {

@@ -99,7 +99,7 @@ You need the following permissions to run this module.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_sm_iam_credential_secret"></a> [sm\_iam\_credential\_secret](#module\_sm\_iam\_credential\_secret) | terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm | 1.4.0 |
+| <a name="module_sm_iam_credential_secret"></a> [sm\_iam\_credential\_secret](#module\_sm\_iam\_credential\_secret) | terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm | 1.5.0 |
 
 ### Resources
 
@@ -126,7 +126,7 @@ You need the following permissions to run this module.
 | <a name="input_iam_credential_secret_group_id"></a> [iam\_credential\_secret\_group\_id](#input\_iam\_credential\_secret\_group\_id) | Secret Group ID of secret where IAM Secret will be added to, leave default (null) to add in the default secret group. | `string` | `null` | no |
 | <a name="input_iam_credential_secret_labels"></a> [iam\_credential\_secret\_labels](#input\_iam\_credential\_secret\_labels) | Labels that can be used to search for secrets within the instance. Up to 30 labels can be created. Labels can be between 2 and 64 characters. | `list(string)` | `[]` | no |
 | <a name="input_iam_credential_secret_name"></a> [iam\_credential\_secret\_name](#input\_iam\_credential\_secret\_name) | The name of the IAM credential secret to allow code engine job to pull secrets from Secrets Manager. | `string` | n/a | yes |
-| <a name="input_iam_credential_secret_ttl"></a> [iam\_credential\_secret\_ttl](#input\_iam\_credential\_secret\_ttl) | Specify validity / lease duration of ServiceID API key. Accepted values and formats are: SECONDS, Xm or Xh (where X is the number of minutes or hours appended to m or h respectively). | `string` | `"7776000"` | no |
+| <a name="input_iam_credential_secret_ttl"></a> [iam\_credential\_secret\_ttl](#input\_iam\_credential\_secret\_ttl) | Specify validity / lease duration of ServiceID API key in seconds. Must be an integer between 60 and 7776000 (90 days). | `number` | `7776000` | no |
 | <a name="input_secrets_manager_guid"></a> [secrets\_manager\_guid](#input\_secrets\_manager\_guid) | GUID of secrets manager instance to create the secret engine in. | `string` | n/a | yes |
 | <a name="input_secrets_manager_region"></a> [secrets\_manager\_region](#input\_secrets\_manager\_region) | The region of the secrets manager instance. | `string` | n/a | yes |
 | <a name="input_service_id_name"></a> [service\_id\_name](#input\_service\_id\_name) | The name of the service ID to be created to allow code engine job to pull secrets from Secrets Manager. | `string` | n/a | yes |
