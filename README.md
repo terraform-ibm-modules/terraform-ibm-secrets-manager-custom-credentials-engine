@@ -90,7 +90,7 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.79.2, < 3.0.0 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
@@ -98,13 +98,13 @@ You need the following permissions to run this module.
 ### Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_sm_iam_credential_secret"></a> [sm\_iam\_credential\_secret](#module\_sm\_iam\_credential\_secret) | terraform-ibm-modules/iam-serviceid-apikey-secrets-manager/ibm | 1.5.0 |
 
 ### Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [ibm_iam_authorization_policy.sm_ce_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
 | [ibm_iam_service_id.sm_service_id](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_id) | resource |
 | [ibm_iam_service_policy.sm_service_id_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy) | resource |
@@ -115,7 +115,7 @@ You need the following permissions to run this module.
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_code_engine_job_name"></a> [code\_engine\_job\_name](#input\_code\_engine\_job\_name) | The code engine job name used by this custom credentials configuration. | `string` | n/a | yes |
 | <a name="input_code_engine_project_id"></a> [code\_engine\_project\_id](#input\_code\_engine\_project\_id) | The Project ID of the code engine project used by the custom credentials configuration. | `string` | n/a | yes |
 | <a name="input_code_engine_region"></a> [code\_engine\_region](#input\_code\_engine\_region) | The region of the code engine project. | `string` | n/a | yes |
@@ -136,7 +136,7 @@ You need the following permissions to run this module.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_code_engine_key_ref"></a> [code\_engine\_key\_ref](#output\_code\_engine\_key\_ref) | The IAM API key used by the credentials system to access the secrets manager instance. |
 | <a name="output_custom_config_engine_id"></a> [custom\_config\_engine\_id](#output\_custom\_config\_engine\_id) | The unique identifier of the engine created. |
 | <a name="output_custom_config_engine_name"></a> [custom\_config\_engine\_name](#output\_custom\_config\_engine\_name) | The name of the engine created. |
